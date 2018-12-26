@@ -5,7 +5,7 @@ Programming language - Swift 4.2
 
 https://github.com/zzzmobile/VideoGraph/blob/master/image/Screenshot01.png?raw=true
 
-(https://raw.githubusercontent.com/zzzmobile/VideoGraph/master/image/Screenshot02.png)
+![VideoGraph](https://raw.githubusercontent.com/zzzmobile/VideoGraph/master/image/Screenshot02.png)
 
 https://github.com/zzzmobile/VideoGraph/blob/master/image/Screenshot03.png?raw=true
 
