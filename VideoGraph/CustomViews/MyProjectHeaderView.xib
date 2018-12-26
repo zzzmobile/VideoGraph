@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MyProjectHeaderView" customModule="VideoGraph" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j7a-bg-o1l">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY PROJECTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNp-Wn-0yc">
+                    <rect key="frame" x="16" y="634" width="101" height="17"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZa-uq-XnL">
+                    <rect key="frame" x="327" y="622.5" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="DQp-St-x7J"/>
+                        <constraint firstAttribute="width" constant="40" id="G4G-8G-WqE"/>
+                    </constraints>
+                    <state key="normal" image="icon_popup_delete"/>
+                    <connections>
+                        <action selector="actionDelete:" destination="iN0-l3-epB" eventType="touchUpInside" id="MME-0w-8y3"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="DZa-uq-XnL" secondAttribute="trailing" constant="8" id="3Ve-bX-jzD"/>
+                <constraint firstItem="DZa-uq-XnL" firstAttribute="centerY" secondItem="eNp-Wn-0yc" secondAttribute="centerY" id="8Df-ic-miR"/>
+                <constraint firstAttribute="bottom" secondItem="eNp-Wn-0yc" secondAttribute="bottom" constant="16" id="NhB-k8-Vmq"/>
+                <constraint firstAttribute="bottom" secondItem="j7a-bg-o1l" secondAttribute="bottom" constant="49" id="QEH-yX-dOI"/>
+                <constraint firstItem="eNp-Wn-0yc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="UcC-34-lcx"/>
+                <constraint firstItem="j7a-bg-o1l" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gvq-2f-32o"/>
+                <constraint firstItem="j7a-bg-o1l" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="t1X-gc-eGX"/>
+                <constraint firstItem="j7a-bg-o1l" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uuf-wx-aIM"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="maximumContentHeight">
+                    <integer key="value" value="240"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="minimumContentHeight">
+                    <real key="value" value="64"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="m_btnDelete" destination="DZa-uq-XnL" id="E2B-DU-htS"/>
+                <outlet property="m_imgThumbnail" destination="j7a-bg-o1l" id="PoX-O8-Qm1"/>
+                <outlet property="m_lblTitle" destination="eNp-Wn-0yc" id="onK-U9-YoG"/>
+            </connections>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_popup_delete" width="20" height="24"/>
+    </resources>
+</document>
