@@ -63,9 +63,9 @@ class CropViewController: UIViewController {
         self.tweakViewCon = self.storyboard?.instantiateViewController(withIdentifier: Constants.ViewIDs.CropSubViewController) as? CropSubViewController
         self.tweakViewCon?.delegate = self
         self.tweakViewCon?.image = self.originalImage
-        self.addChildViewController(tweakViewCon!)
+        self.addChild(tweakViewCon!)
         self.m_viewCropCanvas.addSubview(tweakViewCon!.view)
-        tweakViewCon!.didMove(toParentViewController: self)
+        tweakViewCon!.didMove(toParent: self)
     }
     
     func showLockMode() {

@@ -102,8 +102,8 @@ class NewCameraViewController: UIViewController, UITableViewDataSource, UITableV
         imagePicker = UIImagePickerController()
         
         NotificationCenter.default.addObserver(self, selector: #selector(finishedCounterAnimation), name: NSNotification.Name(rawValue: Constants.NotificationName.FinishedAnimation), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(appDroppedBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(appReactivatedForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appDroppedBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appReactivatedForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { (bSuccess) in
             DispatchQueue.main.async {
@@ -380,7 +380,7 @@ class NewCameraViewController: UIViewController, UITableViewDataSource, UITableV
         self.m_imgCamera.addSubview(self.focusView!)
         
         UIView.animate(withDuration: 0.8, delay: 0.0, usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 3.0, options: UIViewAnimationOptions.curveEaseIn, // UIViewAnimationOptions.BeginFromCurrentState
+                       initialSpringVelocity: 3.0, options: UIView.AnimationOptions.curveEaseIn, // UIViewAnimationOptions.BeginFromCurrentState
             animations: {
                 self.focusView!.alpha = 1.0
                 self.focusView!.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -462,7 +462,7 @@ class NewCameraViewController: UIViewController, UITableViewDataSource, UITableV
             alertView.doneActionBlock({
                 self.bShowedCameraPermissionDialog = false
                 
-                if let url = URL(string:UIApplicationOpenSettingsURLString) {
+                if let url = URL(string:UIApplication.openSettingsURLString) {
                     if UIApplication.shared.canOpenURL(url) {
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
@@ -805,8 +805,8 @@ class NewCameraViewController: UIViewController, UITableViewDataSource, UITableV
             actionButton.setImage(UIImage.init(named: array_setting_awb.object(at: indexPath.row) as? String ?? ""), for: UIControl.State.normal)
             actionButton.setTitle("", for: UIControl.State.normal)
         }
-        actionButton.setBackgroundImage(UIImage.init(named: "hr-bg"), for: UIControlState.selected)
-        actionButton.setBackgroundImage(nil, for: UIControlState.normal)
+        actionButton.setBackgroundImage(UIImage.init(named: "hr-bg"), for: UIControl.State.selected)
+        actionButton.setBackgroundImage(nil, for: UIControl.State.normal)
         if(nLeftSettingActiveIndex == indexPath.row){
             actionButton.isSelected = true
         }else{
@@ -956,14 +956,14 @@ class NewCameraViewController: UIViewController, UITableViewDataSource, UITableV
         imagePicker!.videoMaximumDuration = MAX_VIDEO_DURATION
         present(imagePicker!, animated: true, completion: nil)
     }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
-        let mediaType = info[UIImagePickerControllerMediaType]
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+        let mediaType = info[UIImagePickerController.InfoKey.mediaType.rawValue]
         
         var bFoundVideo: Bool = false
         if mediaType is String {
             let stringType = mediaType as! String
             if stringType == kUTTypeMovie as String {
-                if let urlOfVideo = info[UIImagePickerControllerMediaURL] as? URL {
+                if let urlOfVideo = info[UIImagePickerController.InfoKey.mediaURL.rawValue] as? URL {
                     self.selectedVideoURL = urlOfVideo
                     bFoundVideo = true
                 }

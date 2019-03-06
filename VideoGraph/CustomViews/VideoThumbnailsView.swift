@@ -106,7 +106,7 @@ class VideoThumbnailsView: UIView {
         
         var count = 0
         let handler: AVAssetImageGeneratorCompletionHandler = { [weak self] (_, cgimage, _, result, error) in
-            if let cgimage = cgimage, error == nil && result == AVAssetImageGeneratorResult.succeeded {
+            if let cgimage = cgimage, error == nil && result == AVAssetImageGenerator.Result.succeeded {
                 DispatchQueue.main.async(execute: { [weak self] () -> Void in
                     if count == 0 {
                         self?.displayFirstImage(cgimage, visibleThumbnails: visibleThumnails)
@@ -130,7 +130,7 @@ class VideoThumbnailsView: UIView {
     
     private func displayImage(_ cgImage: CGImage, at index: Int) {
         if let thumbView = self.viewWithTag(40 + index) as? UIImageView {
-            let uiimage = UIImage(cgImage: cgImage, scale: 1.0, orientation: UIImageOrientation.up)
+            let uiimage = UIImage(cgImage: cgImage, scale: 1.0, orientation: UIImage.Orientation.up)
             thumbView.image = uiimage
         }
     }

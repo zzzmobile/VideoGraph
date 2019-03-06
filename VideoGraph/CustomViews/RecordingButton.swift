@@ -52,7 +52,7 @@ class RecordingButton: UIButton, CAAnimationDelegate {
         // Set the animation duration appropriately
         animation.duration = duration
         animation.isRemovedOnCompletion = true
-        animation.fillMode = kCAFillModeForwards
+        animation.fillMode = CAMediaTimingFillMode.forwards
         animation.delegate = self
         
         // Animate from 0 (no circle) to 1 (full circle)
@@ -60,7 +60,7 @@ class RecordingButton: UIButton, CAAnimationDelegate {
         animation.toValue = 1
         
         // Do a linear animation (i.e. the speed of the animation stays the same)
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         
         // Set the circleLayer's strokeEnd property to 1.0 now so that it's the
         // right value when the animation ends.

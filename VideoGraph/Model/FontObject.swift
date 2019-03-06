@@ -267,10 +267,10 @@ class FontObject: NSObject, NSCoding, NSCopying {
         paragraphStyle.lineSpacing = settings.line_spacing
         paragraphStyle.lineBreakMode = .byClipping
         
-        let attributes = [NSAttributedStringKey.foregroundColor: colors[settings.colorIdx].withAlphaComponent(settings.opacity),
-                          NSAttributedStringKey.font: font,
-                          NSAttributedStringKey.paragraphStyle: paragraphStyle,
-                          NSAttributedStringKey.kern: settings.character_spacing] as [NSAttributedStringKey : Any]
+        let attributes = [NSAttributedString.Key.foregroundColor: colors[settings.colorIdx].withAlphaComponent(settings.opacity),
+                          NSAttributedString.Key.font: font,
+                          NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                          NSAttributedString.Key.kern: settings.character_spacing] as [NSAttributedString.Key : Any]
         
         let updatedText = NSAttributedString(string: self.settings.text, attributes: attributes)
         let sizeOfText: CGSize = self.settings.text.size(withAttributes: attributes)
@@ -296,10 +296,10 @@ class FontObject: NSObject, NSCoding, NSCopying {
         paragraphStyle.lineSpacing = settings.line_spacing
         paragraphStyle.lineBreakMode = .byClipping
         
-        let attributes = [NSAttributedStringKey.foregroundColor: colors[settings.colorIdx].withAlphaComponent(settings.opacity),
-                          NSAttributedStringKey.font: font,
-                          NSAttributedStringKey.paragraphStyle: paragraphStyle,
-                          NSAttributedStringKey.kern: settings.character_spacing] as [NSAttributedStringKey : Any]
+        let attributes = [NSAttributedString.Key.foregroundColor: colors[settings.colorIdx].withAlphaComponent(settings.opacity),
+                          NSAttributedString.Key.font: font,
+                          NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                          NSAttributedString.Key.kern: settings.character_spacing] as [NSAttributedString.Key : Any]
         
         // Save the context
         context.saveGState()

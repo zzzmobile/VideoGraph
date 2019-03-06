@@ -96,7 +96,7 @@ struct Project {
             self.stillImage = TheGlobalPoolManager.loadImage(stillImagePath)
         }
         
-        self.stillImageSize = CGSizeFromString(UserDefaults.standard.value(forKey: "\(name)_stillImageSize") as! String)
+        self.stillImageSize = NSCoder.cgSize(for: UserDefaults.standard.value(forKey: "\(name)_stillImageSize") as! String)
         
         let originalMaskImagePath = UserDefaults.standard.value(forKey: "\(name)_originalMaskImage") as! String
         if (originalMaskImagePath.length == 0) {
@@ -174,7 +174,7 @@ struct Project {
         
         //let updatedStillImageSize = self.stillImage!.size
         //UserDefaults.standard.set(NSStringFromCGSize(updatedStillImageSize), forKey: "\(name)_stillImageSize")
-        UserDefaults.standard.set(NSStringFromCGSize(self.stillImageSize), forKey: "\(name)_stillImageSize")
+        UserDefaults.standard.set(NSCoder.string(for: self.stillImageSize), forKey: "\(name)_stillImageSize")
 
         if (self.originalMaskImage == nil) {
             UserDefaults.standard.set("", forKey: "\(name)_originalMaskImage")
@@ -262,17 +262,17 @@ struct CropSettings {
         let subName = (isCurrent ? "current" : "prior")
         let name = "project_\(nProjectIdx)_cropsettings_\(subName)"
         
-        UserDefaults.standard.set(NSStringFromCGAffineTransform(self.entireTransform), forKey: "\(name)_entireTransform")
-        UserDefaults.standard.set(NSStringFromCGSize(self.cropSize), forKey: "\(name)_cropSize")
-        UserDefaults.standard.set(NSStringFromCGSize(self.imageViewSize), forKey: "\(name)_imageViewSize")
+        UserDefaults.standard.set(NSCoder.string(for: self.entireTransform), forKey: "\(name)_entireTransform")
+        UserDefaults.standard.set(NSCoder.string(for: self.cropSize), forKey: "\(name)_cropSize")
+        UserDefaults.standard.set(NSCoder.string(for: self.imageViewSize), forKey: "\(name)_imageViewSize")
         
         UserDefaults.standard.set(self.fliped, forKey: "\(name)_fliped")
         UserDefaults.standard.set(self.angle, forKey: "\(name)_angle")
         UserDefaults.standard.set(self.rotateCnt, forKey: "\(name)_rotateCnt")
 
-        UserDefaults.standard.set(NSStringFromCGRect(self.contentViewFrame), forKey: "\(name)_contentViewFrame")
-        UserDefaults.standard.set(NSStringFromCGRect(self.scrollViewFrame), forKey: "\(name)_scrollViewFrame")
-        UserDefaults.standard.set(NSStringFromCGPoint(self.scrollViewContentOffset), forKey: "\(name)_scrollViewContentOffset")
+        UserDefaults.standard.set(NSCoder.string(for: self.contentViewFrame), forKey: "\(name)_contentViewFrame")
+        UserDefaults.standard.set(NSCoder.string(for: self.scrollViewFrame), forKey: "\(name)_scrollViewFrame")
+        UserDefaults.standard.set(NSCoder.string(for: self.scrollViewContentOffset), forKey: "\(name)_scrollViewContentOffset")
 
         UserDefaults.standard.set(self.bUpdated, forKey: "\(name)_bUpdated")
 
@@ -283,17 +283,17 @@ struct CropSettings {
         let subName = (isCurrent ? "current" : "prior")
         let name = "project_\(nProjectIdx)_cropsettings_\(subName)"
 
-        self.entireTransform = CGAffineTransformFromString(UserDefaults.standard.value(forKey: "\(name)_entireTransform") as! String)
-        self.cropSize = CGSizeFromString(UserDefaults.standard.value(forKey: "\(name)_cropSize") as! String)
-        self.imageViewSize = CGSizeFromString(UserDefaults.standard.value(forKey: "\(name)_imageViewSize") as! String)
+        self.entireTransform = NSCoder.cgAffineTransform(for: UserDefaults.standard.value(forKey: "\(name)_entireTransform") as! String)
+        self.cropSize = NSCoder.cgSize(for: UserDefaults.standard.value(forKey: "\(name)_cropSize") as! String)
+        self.imageViewSize = NSCoder.cgSize(for: UserDefaults.standard.value(forKey: "\(name)_imageViewSize") as! String)
         
         self.fliped = UserDefaults.standard.bool(forKey: "\(name)_fliped")
         self.angle = UserDefaults.standard.value(forKey: "\(name)_angle") as! CGFloat
         self.rotateCnt = UserDefaults.standard.integer(forKey: "\(name)_rotateCnt")
 
-        self.contentViewFrame = CGRectFromString(UserDefaults.standard.value(forKey: "\(name)_contentViewFrame") as! String)
-        self.scrollViewFrame = CGRectFromString(UserDefaults.standard.value(forKey: "\(name)_scrollViewFrame") as! String)
-        self.scrollViewContentOffset = CGPointFromString(UserDefaults.standard.value(forKey: "\(name)_scrollViewContentOffset") as! String)
+        self.contentViewFrame = NSCoder.cgRect(for: UserDefaults.standard.value(forKey: "\(name)_contentViewFrame") as! String)
+        self.scrollViewFrame = NSCoder.cgRect(for: UserDefaults.standard.value(forKey: "\(name)_scrollViewFrame") as! String)
+        self.scrollViewContentOffset = NSCoder.cgPoint(for: UserDefaults.standard.value(forKey: "\(name)_scrollViewContentOffset") as! String)
 
         self.bUpdated = UserDefaults.standard.bool(forKey: "\(name)_bUpdated")
     }

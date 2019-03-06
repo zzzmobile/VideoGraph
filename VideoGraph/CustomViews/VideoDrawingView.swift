@@ -20,7 +20,7 @@ class VideoDrawingView: UIView, UIGestureRecognizerDelegate {
     
     var maskImage: UIImage? = nil
     
-    private var context: CIContext = CIContext(options: [kCIContextWorkingColorSpace : NSNull()])
+    private var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
 
     //variables for magnify
     var magnifyingGlassShowDelay: TimeInterval = 0.1

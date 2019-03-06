@@ -32,7 +32,7 @@ class GlobalPool: NSObject {
         for familyName in fontFamilyNames {
             print("------------------------------")
             print("Font Family Name = [\(familyName)]")
-            let names = UIFont.fontNames(forFamilyName: familyName as! String)
+            let names = UIFont.fontNames(forFamilyName: familyName )
             print("Font Names = [\(names)]")
         }
     }
@@ -68,8 +68,8 @@ class GlobalPool: NSObject {
     }
     
     func registerNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(GlobalPool.appDroppedBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(GlobalPool.appReactivatedForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GlobalPool.appDroppedBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GlobalPool.appReactivatedForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     @objc func appDroppedBackground() {
@@ -162,7 +162,7 @@ class GlobalPool: NSObject {
         let directoryURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let pathURL = directoryURLs.appendingPathComponent(imageName)
         
-        let imageData = UIImagePNGRepresentation(image)
+        let imageData = image.pngData()
         
         var bResult: Bool = false
         

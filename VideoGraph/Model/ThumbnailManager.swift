@@ -45,8 +45,8 @@ class ThumbnailManager: NSObject {
     private func setupThumbnailGenerator(_ thumbSize: CGSize) {
         generator = AVAssetImageGenerator(asset: asset!)
         generator?.appliesPreferredTrackTransform = true
-        generator?.requestedTimeToleranceAfter = kCMTimeZero
-        generator?.requestedTimeToleranceBefore = kCMTimeZero
+        generator?.requestedTimeToleranceAfter = CMTime.zero
+        generator?.requestedTimeToleranceBefore = CMTime.zero
         generator?.maximumSize = thumbSize
     }
     
