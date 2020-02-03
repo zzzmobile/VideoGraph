@@ -1,8 +1,10 @@
 # VideoGraph
 iOS Video Editor
 
-Programming language - Swift 4.2
+## Programming language
+Swift 4.2
 
+## Screenshots
 <image src="./image/Screenshot01.png" width="500px"/>
 
 <image src="./image/Screenshot02.png" width="500px"/>
