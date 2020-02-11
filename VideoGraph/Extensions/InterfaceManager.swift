@@ -17,7 +17,7 @@ extension UILabel {
     func addCharacterSpacing(_ value: CGFloat) {
         if let labelText = text, labelText.count > 0 {
             let attributedString = NSMutableAttributedString(string: labelText)
-            attributedString.addAttribute(NSAttributedStringKey.kern, value: value, range: NSRange(location: 0, length: attributedString.length - 1))
+            attributedString.addAttribute(NSAttributedString.Key.kern, value: value, range: NSRange(location: 0, length: attributedString.length - 1))
             attributedText = attributedString
         }
     }
@@ -188,7 +188,7 @@ extension UIImage {
     }
     
     public func imageRotatedByDegrees(_ degrees: CGFloat, flip: Bool) -> UIImage {
-        let radiansToDegrees: (CGFloat) -> CGFloat = {
+        let _: (CGFloat) -> CGFloat = {
             return $0 * (180.0 / CGFloat(Double.pi))
         }
         let degreesToRadians: (CGFloat) -> CGFloat = {
@@ -233,7 +233,7 @@ extension UIImage {
     func fixImageOrientation() -> UIImage
     {
         
-        if self.imageOrientation == UIImageOrientation.up {
+        if self.imageOrientation == UIImage.Orientation.up {
             return self
         }
         
@@ -312,12 +312,12 @@ extension UIImage {
 }
 
 extension UIImageView {
-    func downloadedFrom(link:String, indicatorStyle: UIActivityIndicatorViewStyle, contentMode mode: UIViewContentMode) {
+    func downloadedFrom(link:String, indicatorStyle: UIActivityIndicatorView.Style, contentMode mode: UIView.ContentMode) {
         guard
             let url = URL(string: link)
             else {return}
         contentMode = mode
-        let loadingActivity = UIActivityIndicatorView(activityIndicatorStyle: indicatorStyle)
+        let loadingActivity = UIActivityIndicatorView(style: indicatorStyle)
         loadingActivity.tag = 10
         loadingActivity.frame = self.bounds
         self.addSubview(loadingActivity)
@@ -409,7 +409,7 @@ class InterfaceManager: NSObject, UIAlertViewDelegate {
     }
     
     static func evaluateStringSize (font: UIFont, textToEvaluate: String) -> CGSize {
-        let sizeOfText: CGSize = textToEvaluate.size(withAttributes: [NSAttributedStringKey.font: font])
+        let sizeOfText: CGSize = textToEvaluate.size(withAttributes: [NSAttributedString.Key.font: font])
         
         return sizeOfText //sizeOfText.width
     }
@@ -438,7 +438,7 @@ class InterfaceManager: NSObject, UIAlertViewDelegate {
         // Animate.
         let animation = CABasicAnimation(keyPath: animationId)
         animation.duration = duration
-        animation.fillMode = kCAFillModeForwards
+        animation.fillMode = CAMediaTimingFillMode.forwards
         animation.isRemovedOnCompletion = false
         
         // Create a new path.
@@ -563,7 +563,7 @@ class InterfaceManager: NSObject, UIAlertViewDelegate {
             message.button?.isHidden = true
             var messageConfing = SwiftMessages.defaultConfig
             messageConfing.presentationStyle = (bBottomPos ? .bottom : .top) as SwiftMessages.PresentationStyle
-            messageConfing.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+            messageConfing.presentationContext = .window(windowLevel: UIWindow.Level.normal)
             messageConfing.preferredStatusBarStyle = bDefaultStatus ? .default : .lightContent
             SwiftMessages.show(config: messageConfing, view: message)
         })
@@ -579,7 +579,7 @@ class InterfaceManager: NSObject, UIAlertViewDelegate {
             message.button?.isHidden = true
             var messageConfing = SwiftMessages.defaultConfig
             messageConfing.presentationStyle = (bBottomPos ? .bottom : .top) as SwiftMessages.PresentationStyle
-            messageConfing.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+            messageConfing.presentationContext = .window(windowLevel: UIWindow.Level.normal)
             messageConfing.preferredStatusBarStyle = bDefaultStatus ? .default : .lightContent
             SwiftMessages.show(config: messageConfing, view: message)
         })

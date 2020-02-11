@@ -55,7 +55,7 @@ class CenterFocusView: UIView, UIScrollViewDelegate, TextSubViewDelegate, TextIc
         self.scrollView?.showsHorizontalScrollIndicator = false
         self.scrollView?.showsVerticalScrollIndicator = false
         //self.scrollView?.isScrollEnabled = false
-        self.scrollView?.decelerationRate = UIScrollViewDecelerationRateFast
+        self.scrollView?.decelerationRate = UIScrollView.DecelerationRate.fast
         self.addSubview(self.scrollView!)
         
         let initialOffset: CGFloat = self.bounds.width / 2.0 - cellWidth / 2.0
@@ -96,7 +96,7 @@ class CenterFocusView: UIView, UIScrollViewDelegate, TextSubViewDelegate, TextIc
         self.scrollView?.showsHorizontalScrollIndicator = false
         self.scrollView?.showsVerticalScrollIndicator = false
         //self.scrollView?.isScrollEnabled = false
-        self.scrollView?.decelerationRate = UIScrollViewDecelerationRateFast
+        self.scrollView?.decelerationRate = UIScrollView.DecelerationRate.fast
         self.addSubview(self.scrollView!)
         
         let initialOffset: CGFloat = self.bounds.width / 2.0 - cellWidth / 2.0

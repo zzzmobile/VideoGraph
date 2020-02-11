@@ -37,7 +37,7 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     func makeUserInterface() {
         self.m_collectionView.backgroundColor = UIColor.white
         
-        let edgeInsets = UIEdgeInsetsMake(16.0, 16.0, 16.0, 16.0)
+        let edgeInsets = UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
         let layout:UICollectionViewFlowLayout = self.m_collectionView.collectionViewLayout as! UICollectionViewFlowLayout;
         layout.sectionInset = edgeInsets
         layout.minimumInteritemSpacing = 4.0

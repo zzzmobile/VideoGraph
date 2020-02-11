@@ -133,7 +133,7 @@ class NewStillViewController: UIViewController {
         let directoryURLs = fileMngr.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let imageURL = directoryURLs.appendingPathComponent("Still Image.png")
         
-        let imageData = UIImagePNGRepresentation(self.m_imgStillImage.image!)
+        let imageData = self.m_imgStillImage.image!.pngData()
         do {
             try imageData?.write(to: imageURL)
         } catch {
@@ -167,8 +167,8 @@ extension NewStillViewController: UIDocumentPickerDelegate {
 }
 
 extension NewStillViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let chosenImage = info[UIImagePickerController.InfoKey.originalImage.rawValue] as! UIImage
         let updatedImage = TheImageProcesser.changeColorSpace(chosenImage)
         
         let resizedImage = updatedImage.resize(TheVideoEditor.stillImage!.size)

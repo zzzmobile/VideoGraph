@@ -580,7 +580,7 @@ class NewEditViewController: UIViewController, TemplateMenuViewControllerDelegat
         self.view_setting_brush.isHidden = false
         self.view_right_settingView.isHidden = true
         self.actionContainerGotoRight()
-        self.view.bringSubview(toFront: self.view_setting_brush)
+        self.view.bringSubviewToFront(self.view_setting_brush)
     }
     @IBAction func onLeftStillImage(_ sender: Any) {
         self.btn_left_home.isSelected = false
@@ -632,7 +632,7 @@ class NewEditViewController: UIViewController, TemplateMenuViewControllerDelegat
         self.view_right_settingView.isHidden = false
         self.view_right_settingView.showRightRepeatSetting()
         self.actionContainerGotoLeft()
-        self.view.bringSubview(toFront: self.view_right_settingView)
+        self.view.bringSubviewToFront(self.view_right_settingView)
     }
     @IBAction func onRightColor(_ sender: Any) {
         if(self.btn_right_color.isSelected){
@@ -650,7 +650,7 @@ class NewEditViewController: UIViewController, TemplateMenuViewControllerDelegat
         self.view_right_settingView.isHidden = false
         self.view_right_settingView.showRightColorSetting()
         self.actionContainerGotoLeft()
-        self.view.bringSubview(toFront: self.view_right_settingView)
+        self.view.bringSubviewToFront(self.view_right_settingView)
     }
     @IBAction func onRightFilter(_ sender: Any) {
         if(self.btn_right_filter.isSelected){
@@ -668,7 +668,7 @@ class NewEditViewController: UIViewController, TemplateMenuViewControllerDelegat
         self.view_right_settingView.isHidden = false
         self.view_right_settingView.showRightFilterSetting()
         self.actionContainerGotoLeft()
-        self.view.bringSubview(toFront: self.view_right_settingView)
+        self.view.bringSubviewToFront(self.view_right_settingView)
     }
     @IBAction func onRightText(_ sender: Any) {
         if(self.btn_right_text.isSelected){
@@ -687,7 +687,7 @@ class NewEditViewController: UIViewController, TemplateMenuViewControllerDelegat
         self.view_right_settingView.isHidden = false
         self.view_right_settingView.showRightTextSetting()
         self.actionContainerGotoLeft()
-        self.view.bringSubview(toFront: self.view_right_settingView)
+        self.view.bringSubviewToFront(self.view_right_settingView)
         
         
     }

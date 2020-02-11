@@ -62,7 +62,7 @@ extension UIImage {
             kCVPixelBufferCGImageCompatibilityKey: false,
             kCVPixelBufferCGBitmapContextCompatibilityKey: false,
             ]
-        let status = CVPixelBufferCreate(kCFAllocatorDefault, Int(size.width), Int(size.height), kCVPixelFormatType_32BGRA, options as CFDictionary, &pixelBuffer)
+        _ = CVPixelBufferCreate(kCFAllocatorDefault, Int(size.width), Int(size.height), kCVPixelFormatType_32BGRA, options as CFDictionary, &pixelBuffer)
         CVPixelBufferLockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
         let pixelData = CVPixelBufferGetBaseAddress(pixelBuffer!)
         let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
@@ -75,10 +75,10 @@ extension UIImage {
     var cmSampleBuffer: CMSampleBuffer {
         let pixelBuffer = cvPixelBuffer
         var newSampleBuffer: CMSampleBuffer? = nil
-        var timimgInfo: CMSampleTimingInfo = kCMTimingInfoInvalid
+        var timimgInfo: CMSampleTimingInfo = CMSampleTimingInfo.invalid
         var videoInfo: CMVideoFormatDescription? = nil
-        CMVideoFormatDescriptionCreateForImageBuffer(nil, pixelBuffer!, &videoInfo)
-        CMSampleBufferCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer!, true, nil, nil, videoInfo!, &timimgInfo, &newSampleBuffer)
+        CMVideoFormatDescriptionCreateForImageBuffer(allocator: nil, imageBuffer: pixelBuffer!, formatDescriptionOut: &videoInfo)
+        CMSampleBufferCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: pixelBuffer!, dataReady: true, makeDataReadyCallback: nil, refcon: nil, formatDescription: videoInfo!, sampleTiming: &timimgInfo, sampleBufferOut: &newSampleBuffer)
         return newSampleBuffer!
     }
     

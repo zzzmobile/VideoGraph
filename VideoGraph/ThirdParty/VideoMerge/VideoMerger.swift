@@ -19,7 +19,7 @@ class VideoMerger: NSObject {
         }
         var instructions = [AVVideoCompositionInstructionProtocol]()
         var isError = false
-        var currentTime: CMTime = kCMTimeZero
+        var currentTime: CMTime = CMTime.zero
         var videoSize = CGSize.zero
         var highestFrameRate = 0
         for  videoFileURL in videoFileURLs {
@@ -46,13 +46,13 @@ class VideoMerger: NSObject {
             }
             let currentFrameRate = Int(roundf((videoAsset.nominalFrameRate)))
             highestFrameRate = (currentFrameRate > highestFrameRate) ? currentFrameRate : highestFrameRate
-            let trimmingTime: CMTime = CMTimeMake(Int64(lround(Double((videoAsset.nominalFrameRate) / (videoAsset.nominalFrameRate)))), Int32((videoAsset.nominalFrameRate)))
-            let timeRange: CMTimeRange = CMTimeRangeMake(trimmingTime, CMTimeSubtract((videoAsset.timeRange.duration), trimmingTime))
+            let trimmingTime: CMTime = CMTimeMake(value: Int64(lround(Double((videoAsset.nominalFrameRate) / (videoAsset.nominalFrameRate)))), timescale: Int32((videoAsset.nominalFrameRate)))
+            let timeRange: CMTimeRange = CMTimeRangeMake(start: trimmingTime, duration: CMTimeSubtract((videoAsset.timeRange.duration), trimmingTime))
             do {
                 try videoTrack.insertTimeRange(timeRange, of: videoAsset, at: currentTime)
                 
                 let videoCompositionInstruction = AVMutableVideoCompositionInstruction.init()
-                videoCompositionInstruction.timeRange = CMTimeRangeMake(currentTime, timeRange.duration)
+                videoCompositionInstruction.timeRange = CMTimeRangeMake(start: currentTime, duration: timeRange.duration)
                 let layerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
                 
                 var tx: Int = 0
@@ -79,7 +79,7 @@ class VideoMerger: NSObject {
                     }
                 }
                 let Move = CGAffineTransform(translationX: CGFloat(tx), y: CGFloat(ty))
-                layerInstruction.setTransform(Scale.concatenating(Move), at: kCMTimeZero)
+                layerInstruction.setTransform(Scale.concatenating(Move), at: CMTime.zero)
                 videoCompositionInstruction.layerInstructions = [layerInstruction]
                 instructions.append(videoCompositionInstruction)
                 currentTime = CMTimeAdd(currentTime, timeRange.duration)
@@ -99,7 +99,7 @@ class VideoMerger: NSObject {
             exportSession?.shouldOptimizeForNetworkUse = true
             let mutableVideoComposition = AVMutableVideoComposition.init()
             mutableVideoComposition.instructions = instructions
-            mutableVideoComposition.frameDuration = CMTimeMake(1, Int32(highestFrameRate))
+            mutableVideoComposition.frameDuration = CMTimeMake(value: 1, timescale: Int32(highestFrameRate))
             mutableVideoComposition.renderSize = videoSize
             exportSession?.videoComposition = mutableVideoComposition
             print("Composition Duration: %ld s", lround(CMTimeGetSeconds(composition.duration)))

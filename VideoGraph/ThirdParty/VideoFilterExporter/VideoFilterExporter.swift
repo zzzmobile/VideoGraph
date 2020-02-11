@@ -32,7 +32,7 @@ class VideoFilterExport{
     
     convenience init(asset: AVAsset, filters: [CIFilter]){
         let eagl = EAGLContext(api: EAGLRenderingAPI.openGLES2)
-        let context = CIContext(eaglContext: eagl!, options: [kCIContextWorkingColorSpace : NSNull()])
+        let context = CIContext(eaglContext: eagl!, options: [CIContextOption.workingColorSpace : NSNull()])
         
         self.init(asset: asset, filters: filters, context: context)
     }
@@ -48,7 +48,7 @@ class VideoFilterExport{
         
         let instruction = VideoFilterCompositionInstruction(trackID: videoTrack.trackID, filters: self.filters, context: self.context)
         
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, self.asset.duration)
+        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: self.asset.duration)
         instruction.layerInstructions = [layerInstruction]
         
         let videoComposition = AVMutableVideoComposition()

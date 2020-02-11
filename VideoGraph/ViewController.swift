@@ -141,7 +141,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
 //        self.m_collectionView.backgroundColor = UIColor.white
         
-        let edgeInsets = UIEdgeInsetsMake(4.0, 8.0, 8.0, 8.0)
+        let edgeInsets = UIEdgeInsets(top: 4.0, left: 8.0, bottom: 8.0, right: 8.0)
         let layout:UICollectionViewFlowLayout = self.m_collectionView.collectionViewLayout as! UICollectionViewFlowLayout;
         layout.sectionInset = edgeInsets
         layout.minimumInteritemSpacing = 8

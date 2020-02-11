@@ -303,7 +303,7 @@ class EditViewController: UIViewController, TemplateMenuViewControllerDelegate, 
 
             //add font objects
             deselectAllStickerViews()
-            for fontObject in TheVideoEditor.fontObjects {
+            for _ in TheVideoEditor.fontObjects {
 //                fontObject.doProcessAfterUndo(self)
             }
             selectStickerView()
@@ -583,9 +583,9 @@ class EditViewController: UIViewController, TemplateMenuViewControllerDelegate, 
     
     func removeCurrentMenuViewCon() {
         if (currentSubMenuViewCon != nil) {
-            currentSubMenuViewCon!.willMove(toParentViewController: nil)
+            currentSubMenuViewCon!.willMove(toParent: nil)
             currentSubMenuViewCon!.view.removeFromSuperview()
-            currentSubMenuViewCon!.removeFromParentViewController()
+            currentSubMenuViewCon!.removeFromParent()
         }
         
         currentSubMenuViewCon = nil
@@ -593,9 +593,9 @@ class EditViewController: UIViewController, TemplateMenuViewControllerDelegate, 
     
     func removeCurrentMenuContentViewCon() {
         if (currentSubMenuContentViewCon != nil) {
-            currentSubMenuContentViewCon!.willMove(toParentViewController: nil)
+            currentSubMenuContentViewCon!.willMove(toParent: nil)
             currentSubMenuContentViewCon!.view.removeFromSuperview()
-            currentSubMenuContentViewCon!.removeFromParentViewController()
+            currentSubMenuContentViewCon!.removeFromParent()
         }
         
         currentSubMenuContentViewCon = nil
@@ -609,9 +609,9 @@ class EditViewController: UIViewController, TemplateMenuViewControllerDelegate, 
         viewCon?.titles = titles
         viewCon?.delegate = self
         
-        self.addChildViewController(viewCon!)
+        self.addChild(viewCon!)
         self.m_viewSubMenu.addSubview(viewCon!.view)
-        viewCon?.didMove(toParentViewController: self)
+        viewCon?.didMove(toParent: self)
         viewCon!.view.frame = self.m_viewSubMenu.bounds
         
         self.currentSubMenuViewCon = viewCon
@@ -625,9 +625,9 @@ class EditViewController: UIViewController, TemplateMenuViewControllerDelegate, 
         viewCon?.titles = titles
         viewCon?.delegate = self
 
-        self.addChildViewController(viewCon!)
+        self.addChild(viewCon!)
         self.m_viewSubMenu.addSubview(viewCon!.view)
-        viewCon?.didMove(toParentViewController: self)
+        viewCon?.didMove(toParent: self)
         viewCon!.view.frame = self.m_viewSubMenu.bounds
         
         self.currentSubMenuViewCon = viewCon
@@ -645,9 +645,9 @@ class EditViewController: UIViewController, TemplateMenuViewControllerDelegate, 
 
         let viewCon = self.storyboard?.instantiateViewController(withIdentifier: Constants.ViewIDs.FilterViewController) as? FilterViewController
         
-        self.addChildViewController(viewCon!)
+        self.addChild(viewCon!)
         self.m_viewSubMenuContent.addSubview(viewCon!.view)
-        viewCon?.didMove(toParentViewController: self)
+        viewCon?.didMove(toParent: self)
         viewCon!.view.frame = self.m_viewSubMenuContent.bounds
         
         self.currentSubMenuViewCon = nil
@@ -712,9 +712,9 @@ class EditViewController: UIViewController, TemplateMenuViewControllerDelegate, 
         
         let viewCon = self.storyboard?.instantiateViewController(withIdentifier: viewID)
         
-        self.addChildViewController(viewCon!)
+        self.addChild(viewCon!)
         self.m_viewSubMenuContent.addSubview(viewCon!.view)
-        viewCon?.didMove(toParentViewController: self)
+        viewCon?.didMove(toParent: self)
         viewCon!.view.frame = self.m_viewSubMenuContent.bounds
         
         self.currentSubMenuContentViewCon = viewCon
@@ -813,7 +813,7 @@ class EditViewController: UIViewController, TemplateMenuViewControllerDelegate, 
         
         //update font objects in the video
         deselectAllStickerViews()
-        for fontObject in TheVideoEditor.fontObjects {
+        for _ in TheVideoEditor.fontObjects {
 //            fontObject.doProcessAfterUndo(self)
         }
         selectStickerView()

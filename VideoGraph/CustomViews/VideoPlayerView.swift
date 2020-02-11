@@ -13,7 +13,7 @@ class VideoPlayerView: UIView {
     var videoThumbnailView: VideoThumbnailsView? = nil
     var fadePlayerView: VideoFadePlayerView? = nil
     
-    var currentTime: CMTime = kCMTimeZero
+    var currentTime: CMTime = CMTime.zero
     
     var playerItem: AVPlayerItem? = nil
     var player: AVPlayer? = nil
@@ -22,7 +22,7 @@ class VideoPlayerView: UIView {
     //variables for getting video data in real time
     private var output: AVPlayerItemVideoOutput!
     private var displayLink: CADisplayLink!
-    private var context: CIContext = CIContext(options: [kCIContextWorkingColorSpace : NSNull()])
+    private var context: CIContext = CIContext(options: [CIContextOption.workingColorSpace : NSNull()])
     private var playerItemObserver: NSKeyValueObservation?
 
     var nPlayingIdx: Int = 0
@@ -136,7 +136,7 @@ class VideoPlayerView: UIView {
         
         displayLink = CADisplayLink(target: self, selector: #selector(displayLinkUpdated(link:)))
         displayLink.preferredFramesPerSecond = Int(nPFS)
-        displayLink.add(to: .main, forMode: .commonModes)
+        displayLink.add(to: .main, forMode: .common)
     }
     
     func stopVideo() {
@@ -225,7 +225,7 @@ class VideoPlayerView: UIView {
             let startTime = CMTime(seconds: Double(TheVideoEditor.editSettings.delay + leftOffsetTime), preferredTimescale: self.playerItem!.asset.duration.timescale)
             let endTime = CMTime(seconds: Double(duration - rightOffsetTime), preferredTimescale: self.playerItem!.asset.duration.timescale)
             
-            player!.seek(to: endTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero)
+            player!.seek(to: endTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
             playerItem!.reversePlaybackEndTime = startTime
             self.player?.rate = -1 * Float(TheVideoEditor.editSettings.speed)
             

@@ -209,16 +209,16 @@ class VideoEditor: NSObject {
         // Make video to square
         let videoComposition = AVMutableVideoComposition()
         videoComposition.renderSize = CGSize( width: newWidth, height: newHeight)
-        videoComposition.frameDuration = CMTimeMake(1, (nFPS == 24 ? 30 : nFPS))
+        videoComposition.frameDuration = CMTimeMake(value: 1, timescale: (nFPS == 24 ? 30 : nFPS))
         
         // Rotate to portrait
         let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
         let transform1 = CGAffineTransform(translationX: 0, y: -(naturalSize.height - newHeight) / 2)
         //let transform2 = transform1.rotated(by: CGFloat( Double.pi / 2.0 ) )
-        transformer.setTransform(transform1, at: kCMTimeZero)
+        transformer.setTransform(transform1, at: CMTime.zero)
         
         let instruction = AVMutableVideoCompositionInstruction()
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, videoAsset.duration)
+        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: videoAsset.duration)
         instruction.layerInstructions = [transformer]
         
         videoComposition.instructions = [instruction]
@@ -251,7 +251,7 @@ class VideoEditor: NSObject {
         let videoTrack = composition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: 1)
         let timeRange = originalVideoTrack.timeRange
         do {
-            try videoTrack?.insertTimeRange(timeRange, of: originalVideoTrack, at: kCMTimeZero)
+            try videoTrack?.insertTimeRange(timeRange, of: originalVideoTrack, at: CMTime.zero)
         } catch {
             
         }
@@ -263,32 +263,32 @@ class VideoEditor: NSObject {
         
         
         //MARK - Fix Rotation
-        var firstAssetOrientation_ = UIImageOrientation.up
+        var firstAssetOrientation_ = UIImage.Orientation.up
         
         var isFirstAssetPortrait_ = false
         
         let firstTransform = videoTrack!.preferredTransform;
         if firstTransform.a == 0 && firstTransform.b == 1.0 && firstTransform.c == -1.0 && firstTransform.d == 0 {
-            firstAssetOrientation_ = UIImageOrientation.right;
+            firstAssetOrientation_ = UIImage.Orientation.right;
             isFirstAssetPortrait_ = true;
         }
         if (firstTransform.a == 0 && firstTransform.b == -1.0 && firstTransform.c == 1.0 && firstTransform.d == 0) {
-            firstAssetOrientation_ =  UIImageOrientation.left;
+            firstAssetOrientation_ =  UIImage.Orientation.left;
             isFirstAssetPortrait_ = true;
         }
         if (firstTransform.a == 1.0 && firstTransform.b == 0 && firstTransform.c == 0 && firstTransform.d == 1.0) {
-            firstAssetOrientation_ =  UIImageOrientation.up;
+            firstAssetOrientation_ =  UIImage.Orientation.up;
         }
         if (firstTransform.a == -1.0 && firstTransform.b == 0 && firstTransform.c == 0 && firstTransform.d == -1.0) {
-            firstAssetOrientation_ = UIImageOrientation.down;
+            firstAssetOrientation_ = UIImage.Orientation.down;
         }
         
-        firstlayerInstruction.setTransform(asset.preferredTransform, at: kCMTimeZero)
+        firstlayerInstruction.setTransform(asset.preferredTransform, at: CMTime.zero)
         mainInstruction.layerInstructions = [firstlayerInstruction]
         
         
         let videoComposition = AVMutableVideoComposition()
-        videoComposition.frameDuration = CMTimeMake(1, 30)
+        videoComposition.frameDuration = CMTimeMake(value: 1, timescale: 30)
         videoComposition.instructions = [mainInstruction]
         
         var naturalSizeFirst = CGSize()
@@ -339,16 +339,16 @@ class VideoEditor: NSObject {
         // Make video to square
         let videoComposition = AVMutableVideoComposition()
         videoComposition.renderSize = CGSize( width: newWidth, height: newHeight)
-        videoComposition.frameDuration = CMTimeMake(1, (nFPS == 24 ? 30 : nFPS))
+        videoComposition.frameDuration = CMTimeMake(value: 1, timescale: (nFPS == 24 ? 30 : nFPS))
         
         // Rotate to portrait
         let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
         let transform1 = CGAffineTransform(translationX: 0, y: -(naturalSize.height - newHeight) / 2)
         //let transform2 = transform1.rotated(by: CGFloat( Double.pi / 2.0 ) )
-        transformer.setTransform(transform1, at: kCMTimeZero)
+        transformer.setTransform(transform1, at: CMTime.zero)
         
         let instruction = AVMutableVideoCompositionInstruction()
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, videoAsset.duration)
+        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: videoAsset.duration)
         instruction.layerInstructions = [transformer]
         
         videoComposition.instructions = [instruction]
@@ -414,27 +414,27 @@ class VideoEditor: NSObject {
             filters.append(filter!)
         }
         
-        let colorControlsFilter = CIFilter(name: "CIColorControls", withInputParameters: [kCIInputSaturationKey: TheVideoEditor.editSettings.saturation,
+        let colorControlsFilter = CIFilter(name: "CIColorControls", parameters: [kCIInputSaturationKey: TheVideoEditor.editSettings.saturation,
                                                                                           kCIInputBrightnessKey: TheVideoEditor.editSettings.brightness,
                                                                                           kCIInputContrastKey: TheVideoEditor.editSettings.contrast])
         filters.append(colorControlsFilter!)
         
-        let vignetteFilter = CIFilter(name: "CIVignette", withInputParameters: [kCIInputIntensityKey: TheVideoEditor.editSettings.intensity,
+        let vignetteFilter = CIFilter(name: "CIVignette", parameters: [kCIInputIntensityKey: TheVideoEditor.editSettings.intensity,
                                                                                 kCIInputRadiusKey: TheVideoEditor.editSettings.radius])
         filters.append(vignetteFilter!)
         
-        let exposureFilter = CIFilter(name: "CIExposureAdjust", withInputParameters: [kCIInputEVKey: TheVideoEditor.editSettings.exposure])
+        let exposureFilter = CIFilter(name: "CIExposureAdjust", parameters: [kCIInputEVKey: TheVideoEditor.editSettings.exposure])
         filters.append(exposureFilter!)
         
         if (TheVideoEditor.bChangedTemperature) {
             let tempColor = TheGlobalPoolManager.getTempColorBetweenTwoColors((TheVideoEditor.editSettings.temperature + 10.0) / 20.0)
-            let tempFilter = CIFilter(name: "CIWhitePointAdjust", withInputParameters: [kCIInputColorKey: CIColor(color: tempColor)])
+            let tempFilter = CIFilter(name: "CIWhitePointAdjust", parameters: [kCIInputColorKey: CIColor(color: tempColor)])
             filters.append(tempFilter!)
         }
         
         if (TheVideoEditor.bChangedTint) {
             let tintColor = TheGlobalPoolManager.getTintColorBetweenTwoColors((TheVideoEditor.editSettings.tint + 10.0) / 20.0)
-            let tintFilter = CIFilter(name: "CIWhitePointAdjust", withInputParameters: [kCIInputColorKey: CIColor(color: tintColor)])
+            let tintFilter = CIFilter(name: "CIWhitePointAdjust", parameters: [kCIInputColorKey: CIColor(color: tintColor)])
             filters.append(tintFilter!)
         }
         
@@ -498,11 +498,11 @@ class VideoEditor: NSObject {
                 break
             }
             
-            let colorMatrixFilter = CIFilter(name: "CIColorMatrix", withInputParameters: ["inputRVector": CIVector(x: nR, y: 0.0, z: 0.0, w: 0.0),
+            let colorMatrixFilter = CIFilter(name: "CIColorMatrix", parameters: ["inputRVector": CIVector(x: nR, y: 0.0, z: 0.0, w: 0.0),
                                                                                           "inputGVector": CIVector(x: 0.0, y: nG, z: 0.0, w: 0.0),
                                                                                           "inputBVector": CIVector(x: 0.0, y: 0.0, z: nB, w: 0.0),
                                                                                           "inputAVector": CIVector(x: 0.0, y: 0.0, z: 0.0, w: (TheVideoEditor.editSettings.toneCurveMode == .RGB ? 1.0 : 0.4))])
-            let gammaFilter = CIFilter(name: "CIGammaAdjust", withInputParameters: ["inputPower": nGamma])
+            let gammaFilter = CIFilter(name: "CIGammaAdjust", parameters: ["inputPower": nGamma])
             
             //make blacks and whites
             let ValueStep: CGFloat = 10.0
@@ -523,7 +523,7 @@ class VideoEditor: NSObject {
                 nBlackFilterValue = 0.0
             }
             
-            let colorClampFilter = CIFilter(name: "CIColorClamp", withInputParameters: ["inputMinComponents": CIVector(x: nBlackFilterValue, y: nBlackFilterValue, z: nBlackFilterValue, w: 0.0),
+            let colorClampFilter = CIFilter(name: "CIColorClamp", parameters: ["inputMinComponents": CIVector(x: nBlackFilterValue, y: nBlackFilterValue, z: nBlackFilterValue, w: 0.0),
                                                                                         "inputMaxComponents": CIVector(x: nWhiteFilterValue, y: nWhiteFilterValue, z: nWhiteFilterValue, w: 1.0)])
             
             if (nHighlights > 0) {
@@ -542,7 +542,7 @@ class VideoEditor: NSObject {
                 nShadowFilterValue = 0.0
             }
             
-            let highlightShadowFilter = CIFilter(name: "CIHighlightShadowAdjust", withInputParameters: ["inputHighlightAmount": nHighlightFilterValue,
+            let highlightShadowFilter = CIFilter(name: "CIHighlightShadowAdjust", parameters: ["inputHighlightAmount": nHighlightFilterValue,
                                                                                                         "inputShadowAmount": nShadowFilterValue])
             
             filters.append(colorMatrixFilter!)
@@ -607,10 +607,10 @@ class VideoEditor: NSObject {
         tx = tx.scaledBy(x: CGFloat(scaleX), y: CGFloat(scaleY))
         tx = tx.translatedBy(x: -translation_scaleX * scrollViewOffset.x - temp_translationX, y: -translation_scaleY * scrollViewOffset.y - temp_translationY)
         
-        transformer.setTransform(tx, at: kCMTimeZero)
+        transformer.setTransform(tx, at: CMTime.zero)
         
         let instruction = AVMutableVideoCompositionInstruction()
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, videoAsset.duration)
+        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: videoAsset.duration)
         
         instruction.layerInstructions = [transformer]
         videoComposition.instructions = [instruction]
@@ -730,12 +730,12 @@ class VideoEditor: NSObject {
         
         let track =  asset.tracks(withMediaType: AVMediaType.video)
         let videoTrack:AVAssetTrack = track[0] as AVAssetTrack
-        let timerange = CMTimeRangeMake(kCMTimeZero, asset.duration)
+        let timerange = CMTimeRangeMake(start: CMTime.zero, duration: asset.duration)
         
         let compositionVideoTrack:AVMutableCompositionTrack = composition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: CMPersistentTrackID())!
         
         do {
-            try compositionVideoTrack.insertTimeRange(timerange, of: videoTrack, at: kCMTimeZero)
+            try compositionVideoTrack.insertTimeRange(timerange, of: videoTrack, at: CMTime.zero)
             compositionVideoTrack.preferredTransform = videoTrack.preferredTransform
         } catch {
             print(error)
@@ -764,12 +764,12 @@ class VideoEditor: NSObject {
         layercomposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videolayer, in: parentlayer)
         
         let instruction = AVMutableVideoCompositionInstruction()
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, composition.duration)
+        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: composition.duration)
         
         let videotrack = composition.tracks(withMediaType: AVMediaType.video)[0] as AVAssetTrack
         let layerinstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: videotrack)
         
-        layerinstruction.setTransform(videoTrack.preferredTransform, at: kCMTimeZero)
+        layerinstruction.setTransform(videoTrack.preferredTransform, at: CMTime.zero)
         
         instruction.layerInstructions = [layerinstruction]
         layercomposition.instructions = [instruction]
@@ -845,10 +845,10 @@ class VideoEditor: NSObject {
         // Rotate to portrait
         let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
         let transform1 = CGAffineTransform(scaleX: sizeRatio, y: sizeRatio)
-        transformer.setTransform(transform1, at: kCMTimeZero)
+        transformer.setTransform(transform1, at: CMTime.zero)
         
         let instruction = AVMutableVideoCompositionInstruction()
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, videoAsset.duration)
+        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: videoAsset.duration)
         instruction.layerInstructions = [transformer]
         
         videoComposition.instructions = [instruction]

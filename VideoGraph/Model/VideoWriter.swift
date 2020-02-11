@@ -16,7 +16,7 @@ class VideoWriter: NSObject {
     static let sharedInstance = VideoWriter()
 
     let writerFileName = "captureVideo.mov"
-    var presentationTime: CMTime = kCMTimeZero
+    var presentationTime: CMTime = CMTime.zero
     var outputSettings   = [String: Any]()
     var videoWriterInput: AVAssetWriterInput!
     var assetWriter: AVAssetWriter!
@@ -49,14 +49,14 @@ class VideoWriter: NSObject {
             return
         }
         
-        if assetWriter?.status == AVAssetWriterStatus.unknown {
+        if assetWriter?.status == AVAssetWriter.Status.unknown {
             if (( assetWriter?.startWriting ) != nil) {
                 assetWriter?.startWriting()
                 assetWriter?.startSession(atSourceTime: startTime)
             }
         }
         
-        if assetWriter?.status == AVAssetWriterStatus.writing {
+        if assetWriter?.status == AVAssetWriter.Status.writing {
             if (videoWriterInput.isReadyForMoreMediaData == true) {
                 if let pixelBuffer = pixelBufferFromCGImage(image: cgImage) {
                     self.adapter.append(pixelBuffer, withPresentationTime: startTime)
@@ -74,7 +74,7 @@ class VideoWriter: NSObject {
         videoWriterInput.markAsFinished()
         assetWriter?.finishWriting(completionHandler: {
             DispatchQueue.main.async {
-                if (self.assetWriter?.status == AVAssetWriterStatus.failed) {
+                if (self.assetWriter?.status == AVAssetWriter.Status.failed) {
                     print("creating movie file is failed ")
                     block(false, nil)
                 } else {
